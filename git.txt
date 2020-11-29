@@ -7,3 +7,10 @@ git init
 
 Статус 
 git status
+
+Добавление в git
+git add index.php
+git add .
+
+Коммит(Фиксация изменений)
+git commit -m "First commit"
