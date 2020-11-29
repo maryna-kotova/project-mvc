@@ -1,0 +1,9 @@
+1) Глобальные данные 1 раз в самом начале
+git config --global user.name "Kotova Maryna"
+git config --global user.email "marynakotova256@gmail.com"
+
+2)Инициализация git
+git init
+
+Статус 
+git status
