@@ -18,7 +18,13 @@ git commit -m "First commit"
 git log --pretty=oneline
 
 Добавление ветки
-git branch dz1
+git branch dz1 
 git checkout dz1 - переход в ветку
 
 git checkout -b dz1 - создание и переход в новую ветку
+
+обьединение ветки
+$ git merge dz1 (при этом мы были в ветке master)
+
+Удалить ветку
+$ git branch -D dz1
