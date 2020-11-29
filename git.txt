@@ -28,3 +28,11 @@ $ git merge dz1 (при этом мы были в ветке master)
 
 Удалить ветку
 $ git branch -D dz1
+
+echo "# project-mvc" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/maryna-kotova/project-mvc.git
+git push -u origin master
