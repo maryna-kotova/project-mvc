@@ -10,13 +10,25 @@ class Route{
         self::$page = $_GET['page'] ?? '/';
         $routes = require __DIR__.'/../web.php';
 
-        if( isset($routes[self::$page]) ){
-            list($nameConroller, $nameMothod) = explode('@', $routes[self::$page]);
+        $isRouteFound = false; // $routes нет совпадений по url
+        foreach ($routes as $pattern => $controllerAndMethod){
+            preg_match('~^'.$pattern.'$~', self::$page, $matches);
+            if(!empty($matches)){
+                $isRouteFound = true;
+                break;
+            }
+            // var_dump($matches);
+        }
+
+        if(  $isRouteFound ){
+            list($nameConroller, $nameMothod) = explode('@', $controllerAndMethod);// $controllerAndMethod = последнему значению так как в foreach был break
             if( file_exists('core/controllers/'. $nameConroller .'.php') ){              
                 $pathController = 'Core\\Controllers\\'.$nameConroller;
                 $controller = new $pathController();
                 if( method_exists($controller, $nameMothod) ){
-                    $controller->$nameMothod();
+                    unset($matches[0]);
+                    
+                    $controller->$nameMothod(...$matches);
                 }
                 else{
                     echo 'Method not found';
