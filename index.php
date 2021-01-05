@@ -20,19 +20,19 @@ spl_autoload_register(function($className){
 Route::start();
 // $a = Route::getPath();
 // echo $a;
-$newFile = new Files('images/big/a.b.c.d.jpg');
-$newFile->getPath();
-$newFile->getDir();
-$newFile->getName();
-$newFile->getEXT();
-$newFile->getSize();
+// $newFile = new Files('images/big/a.b.c.d.jpg');
+// $newFile->getPath();
+// $newFile->getDir();
+// $newFile->getName();
+// $newFile->getEXT();
+// $newFile->getSize();
 
-$newTextFile = new Files('text/out.txt');
-$newTextFile->getText();
-$newTextFile->setText('Black Yellow and White');
-$newTextFile->appendText(' Red');
+// $newTextFile = new Files('text/out.txt');
+// $newTextFile->getText();
+// $newTextFile->setText('Black Yellow and White');
+// $newTextFile->appendText(' Red');
 
-$funcFile = new Files('text/red.txt');
+// $funcFile = new Files('text/red.txt');
 // $funcFile->copy('text/red.txt');
 // $funcFile->delete();
 // $funcFile->rename('text/red.txt');

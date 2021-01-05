@@ -10,7 +10,6 @@ class MainController extends Controller{
     {
         $title = 'Home Page';
         $articles = Article::findAll();
-        // $this->dump($articles);
         View::render( 'main/index', compact('title', 'articles') );
     }    
 

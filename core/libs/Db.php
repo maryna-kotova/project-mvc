@@ -3,7 +3,6 @@ namespace Core\Libs;
 
 class Db{
     protected $pdo;
-
     private static $instance;
 
     private function __construct()

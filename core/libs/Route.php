@@ -40,27 +40,10 @@ class Route{
         }
         else{
             View::render('errors/404', [], 404);
-        }   
-
-        // print_r($routes);
+        }      
     }
 
     public static function getPage(){
         return self::$page;
     }
-    // public static function getPath(){
-    //     $path = get_called_class();
-    //     $arrPath = explode('\\', $path);
-    //     $newPath = '';
-    //     for ($i=0; $i < count($arrPath); $i++) { 
-    //         if($i == (count($arrPath)-1)){
-    //             $newPath.= $arrPath[$i].'.php';  
-    //         }
-    //         else{
-    //             $lower = strtolower($arrPath[$i]);
-    //             $newPath.= $lower.'/';   
-    //         }                  
-    //     } 
-    //    return $newPath;        
-    // }
 }

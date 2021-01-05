@@ -14,31 +14,55 @@ class ArticleController extends Controller{
         if(!$article){
             View::render('errors/404', [], 404);
             return;
-        }
-        // $author = User::getById($article->user_id);
-        // $this->dump($author);
-        // $this->dump($articles);
+        }      
         View::render( 'articles/show', compact('article') );
     }
     public function edit($id)
-    {
-        $dataForm = $_POST[''] ;
-        // echo $id;
+    {      
         $article = Article::getById($id);
         if(!$article){
             View::render('errors/404', [], 404);
             return;
         }
-        $article->name = 'Name article'; // $article->name = $dataForm;
-        $article->text = 'Text for New article';
-        $this->dump($article);
-
+        $article->name = $_POST['name']; // $_POST[]
+        $article->text = $_POST['text'];
+        $article->user_id = $_POST['user_id'];       
         $article->save();
+        $this->redirect('/');
     }
 
-    public function save()
+    function editForm($id)
     {
-       
+        $article = Article::getById($id);
+       if(!$article){
+        throw new NotFoundException();
+       }
+       $users = User::findAll();
+       View::render('articles/edit', compact('article', 'users'));
+    }
+
+    public function add(){
+        $article = new Article();
+        $article->name = $_POST['name']; 
+        $article->text = $_POST['text'];
+        $article->user_id = $_POST['user_id'];
+
+        $article->save();
+        $this->redirect('/');
+    }
+
+    public function addForm()
+    {       
+       $users = User::findAll();
+       View::render('articles/add', compact('users'));
+    }
+
+    public function delete($id)
+    {        
+        $article = Article::getById($id);
+        //var_dump($article);
+        $article->delete();
+        $this->redirect('/');
     }
 
 }
