@@ -1,6 +1,9 @@
 <?php
 use core\libs\Route;
 use IFile\Files;
+use Core\Libs\Exceptions\DbException;
+use Core\Libs\Exceptions\NotFoundExeption;
+use Core\Views\View;
 
 spl_autoload_register(function($className){    
     $arrPath = explode('\\', $className);
@@ -16,8 +19,18 @@ spl_autoload_register(function($className){
     } 
     require_once $newPath;
 });
+try{
+    Route::start();
+}
+catch(DbException $e){
+    echo $e->getMessage();
+}
+catch(NotFoundExeption $e){
+    View::render('errors/404', [], 404);
 
-Route::start();
+}
+
+
 // $a = Route::getPath();
 // echo $a;
 // $newFile = new Files('images/big/a.b.c.d.jpg');

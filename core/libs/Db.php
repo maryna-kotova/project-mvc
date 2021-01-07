@@ -14,7 +14,7 @@ class Db{
            $this->pdo = new \PDO( 'mysql:host=' . $options['host'] . ';dbname=' . $options['dbname'], $options['user'], $options['password'] ); 
         }
         catch(\PDOException $e){
-            throw new DbException('Ошибка при подключении к БД'. $e->getMessage());
+            throw new DbException('Ошибка при подключении к БД '. $e->getMessage());
         }
     }
 

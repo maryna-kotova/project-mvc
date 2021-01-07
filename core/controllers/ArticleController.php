@@ -4,6 +4,7 @@ namespace Core\Controllers;
 use Core\Models\Article;
 use Core\Views\View;
 use Core\Models\User;
+use Core\Libs\Exceptions\NotFoundExeption;
 
 class ArticleController extends Controller{
     
@@ -12,8 +13,7 @@ class ArticleController extends Controller{
         // echo $id;
         $article = Article::getById($id);
         if(!$article){
-            View::render('errors/404', [], 404);
-            return;
+            throw new NotFoundExeption();
         }      
         View::render( 'articles/show', compact('article') );
     }
@@ -21,8 +21,7 @@ class ArticleController extends Controller{
     {      
         $article = Article::getById($id);
         if(!$article){
-            View::render('errors/404', [], 404);
-            return;
+            throw new NotFoundExeption();
         }
         $article->name = $_POST['name']; // $_POST[]
         $article->text = $_POST['text'];
@@ -34,9 +33,9 @@ class ArticleController extends Controller{
     function editForm($id)
     {
         $article = Article::getById($id);
-       if(!$article){
-        throw new NotFoundException();
-       }
+        if(!$article){
+            throw new NotFoundExeption();
+        }
        $users = User::findAll();
        View::render('articles/edit', compact('article', 'users'));
     }

@@ -2,6 +2,7 @@
 namespace Core\Libs;
 
 use Core\Views\View;
+use Core\Libs\Exceptions\NotFoundExeption;
 
 class Route{
     private static $page;
@@ -39,7 +40,7 @@ class Route{
             }
         }
         else{
-            View::render('errors/404', [], 404);
+            throw new NotFoundExeption();                     
         }      
     }
 
