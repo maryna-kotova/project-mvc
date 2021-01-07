@@ -25,9 +25,23 @@ class ArticleController extends Controller{
             $html .= "<h2>{$article->name}</h2>";
             $html .= "<p>{$article->text}</p>";
         }
-        $mpdf = new \Mpdf\Mpdf();
-        $mpdf->WriteHTML($html);
+        // $mpdf = new \Mpdf\Mpdf();
+        // $mpdf->WriteHTML($html);
+        // $mpdf->Output();
+        // $mpdf->Output('articles.pdf', \Mpdf\Output\Destination::DOWNLOAD);
+
+// -------нумерация страниц--------------
+        $mpdf = new \Mpdf\Mpdf([
+            'pagenumPrefix' => 'Страница ',
+            'pagenumSuffix' => ' - ',
+            'nbpgPrefix' => ' из ',
+            'nbpgSuffix' => ' страниц'
+        ]);        
+        $mpdf->setFooter('{PAGENO}{nbpg}');
+        $mpdf->WriteHTML($html);        
         $mpdf->Output();
+// ---------------------
+
     }
 
     public function edit($id)
