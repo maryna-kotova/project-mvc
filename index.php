@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
+
 use core\libs\Route;
 use IFile\Files;
 use Core\Libs\Exceptions\DbException;

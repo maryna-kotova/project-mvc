@@ -17,6 +17,19 @@ class ArticleController extends Controller{
         }      
         View::render( 'articles/show', compact('article') );
     }
+
+    public function pdf(){
+        $articles = Article::findAll();
+        $html = '<h1>Все статьи</h1>';
+        foreach($articles as $article){
+            $html .= "<h2>{$article->name}</h2>";
+            $html .= "<p>{$article->text}</p>";
+        }
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+    }
+
     public function edit($id)
     {      
         $article = Article::getById($id);

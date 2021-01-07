@@ -1,3 +1,30 @@
+.titleHomePage{
+    text-align: center;
+    color: darkblue;
+}
+.titleHomePage+hr{
+    margin: 1rem 0;
+    color: lightgray;
+}
+.saveArticles{
+    display: flex;
+    align-items: center;
+}
+.saveArticles>span{
+    color: #f59829;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+.savePdf{
+    display: block;
+    width: 3rem;
+    height: 4rem;
+    margin: 0.5rem;
+    background-image: url(../assets/icons/pdf.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    border: 1px solid red;
+} 
 .allArticles{
     display: flex;
     flex-flow: row wrap;

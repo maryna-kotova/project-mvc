@@ -1,4 +1,11 @@
-<h1 class="bg-primary"><?= $title ?></h1>
+<h1 class="titleHomePage"><?= $title ?></h1>
+<hr>
+<div class="saveArticles">
+    <span>Save in: </span>    
+    <a href="/pdf-articles" class="savePdf">PDF</a>
+</div>
+
+
 <section class="allArticles">
     <?php foreach($articles as $article): ?>
         <div class="article">
