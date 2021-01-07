@@ -1,6 +1,8 @@
 <?php
 namespace Core\Libs;
 
+use Core\Libs\Exceptions\DbException;
+
 class Db{
     protected $pdo;
     private static $instance;
@@ -8,7 +10,12 @@ class Db{
     private function __construct()
     {
         $options = (require_once __DIR__. '/../config.php')['db'];
-        $this->pdo = new \PDO( 'mysql:host=' . $options['host'] . ';dbname=' . $options['dbname'], $options['user'], $options['password'] );
+        try{
+           $this->pdo = new \PDO( 'mysql:host=' . $options['host'] . ';dbname=' . $options['dbname'], $options['user'], $options['password'] ); 
+        }
+        catch(\PDOException $e){
+            throw new DbException('Ошибка при подключении к БД'. $e->getMessage());
+        }
     }
 
     public function query(string $sql, array $params = [], string $className='stdClass')
