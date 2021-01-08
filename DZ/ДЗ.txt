@@ -1,0 +1,61 @@
+Работаем в проекте mvc. Перед выполнением этого задания предыдущее обязательно должно быть сделано, так как будут использоваться как функции добавления, так и редактирования.
+
+Задача: Реализовать импорт товаров из excel.
+
+Даю два файла и их скрины для тех, у кого нет офиса:
+	Products.xlsx   -   список товаров (рис. 1) загружать первыми
+	Products-update.xlsx - список обновленных товаров (рис. 2) (в первых четырех товарах изменены разные данные, пятый товар - добавлен) загружать после Products.xlsx
+
+
+Решение:
+1. В базе данных создать 2 таблицы:
+categories
+	id bigint unsigned primary key
+	name varchar unique
+products
+	id bigint unsigned primary key
+	name varchar
+	description text
+	price float
+	sku varchar unique
+	category_id bigint unsigned
+
+Где sku - артикул, уникальное поле. По нему определяем есть ли такой товар в базе данных.
+
+2. Добавить модели Category и Product.
+
+3. В проекте создать новую страницу /import (Я бы создала для работы с товарами новый конторллер ProductController), на которой должна быть форма с выбором файла. При загрузке файла:
+	3.1. Первоначально считать столбец с категориями и все несуществующие категории добавить в таблицу categories
+	3.2. Дальше обрабатываем товары:
+		если нет такого товара (определяем по sku), то добавляем в БД
+		если есть - обновляем данные
+	3.3. После обработки файла  на странице вывести сколько добавилось товаров и сколько обновилось
+
+
+
+Подсказки:
+	https://phpspreadsheet.readthedocs.io/en/latest/topics/accessing-cells/#retrieving-a-range-of-cell-values-to-an-array.  Для считывания данных вам будет удобен метод toArray 
+	
+	Не очень уверена, но может понадобиться метод в core\models\Model.php
+	public static function findOneByColumn(string $columnName, $value): ?self
+    {
+        $pdo = DB::getInstance();
+        $result = $pdo->query(
+            'SELECT * FROM ' . static::getTableName() . ' WHERE ' . $columnName . ' = :value LIMIT 1;',
+            [':value' => $value],
+            static::class
+        );
+        if ($result === []) {
+            return null;
+        }
+        return $result[0];
+    }
+
+Этот метод будет принимать два параметра:
+•	имя столбца, по которому искать;
+•	значение, которое мы ищем в этом столбце.
+Если ничего не найдено – вернётся null. Если же что-то нашлось – вернётся первая запись.
+
+Удачи!
+
+	

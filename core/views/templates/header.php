@@ -26,10 +26,13 @@ use Core\Libs\Route;
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item <?= Route::getPage() == '/' ? 'active' : '' ?>">
-        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link  " href="/">Home</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item <?= Route::getPage() == 'contacts' ? 'active' : '' ?> ">
         <a class="nav-link" href="/contacts">Contacts</a>
+      </li>
+      <li class="nav-item <?= Route::getPage() == 'import' ? 'active' : '' ?> ">
+        <a class="nav-link" href="/import">Import</a>
       </li>
       
     </ul>

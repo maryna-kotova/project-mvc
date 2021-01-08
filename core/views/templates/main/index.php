@@ -1,7 +1,7 @@
 <h1 class="titleHomePage"><?= $title ?></h1>
 <hr>
-<div class="saveArticles">
-    <span>Save in: </span>    
+<span>Save in: </span> 
+<div class="saveArticles">    
     <a href="/pdf-articles" class="savePdf"></a>
     <a href="/excel-articles" class="saveExcel"></a>
 </div>

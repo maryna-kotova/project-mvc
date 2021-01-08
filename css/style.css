@@ -6,14 +6,16 @@
     margin: 1rem 0;
     color: lightgray;
 }
-.saveArticles{
-    display: flex;
-    align-items: center;
-}
-.saveArticles>span{
+hr+span{
+    margin-left: 1rem;
     color: #f59829;
     font-weight: 700;
     font-size: 1.3rem;
+}
+.saveArticles{
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
 }
 .savePdf,
 .saveExcel{
@@ -84,4 +86,13 @@
     background-size: 100%;
     background-repeat: no-repeat;   
     background-image: url(../assets/icons/add.png);
+}
+.formaDowloadProd{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /* align-items: center; */
+    width: 20rem;
+    height: 10rem;
+    margin: 3rem auto;    
 }
