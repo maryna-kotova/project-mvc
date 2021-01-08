@@ -5,6 +5,8 @@ use Core\Models\Article;
 use Core\Views\View;
 use Core\Models\User;
 use Core\Libs\Exceptions\NotFoundExeption;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ArticleController extends Controller{
     
@@ -28,20 +30,48 @@ class ArticleController extends Controller{
         // $mpdf = new \Mpdf\Mpdf();
         // $mpdf->WriteHTML($html);
         // $mpdf->Output();
-        // $mpdf->Output('articles.pdf', \Mpdf\Output\Destination::DOWNLOAD);
+        
 
 // -------нумерация страниц--------------
-        $mpdf = new \Mpdf\Mpdf([
-            'pagenumPrefix' => 'Страница ',
-            'pagenumSuffix' => ' - ',
-            'nbpgPrefix' => ' из ',
-            'nbpgSuffix' => ' страниц'
-        ]);        
-        $mpdf->setFooter('{PAGENO}{nbpg}');
+        $mpdf = new \Mpdf\Mpdf();        
+        $mpdf->setFooter('Страница {PAGENO} из {nbpg}');
         $mpdf->WriteHTML($html);        
-        $mpdf->Output();
+        // $mpdf->Output();
 // ---------------------
+        $mpdf->Output('articles.pdf', \Mpdf\Output\Destination::DOWNLOAD);
+    }
 
+    public function excel()
+    {
+        header('Content-Type: application/vnd.ms-excel');
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="articles.xlsx"');
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $articles = Article::findAll();
+        $count=1;
+        
+       foreach($articles as $article){
+            $count++;
+            $autor = $article->getAuthor()->name;
+            $sheet->setCellValue('A'.$count, $article->name);            
+            $sheet->setCellValue('B'.$count, $article->text);
+            $sheet->setCellValue('C'.$count, $autor);
+            $sheet->setCellValue('D'.$count, $article->created_at);
+        }
+        // $sheet->setCellValue('A1', 'Here must be my articles!');
+
+
+        // for ($i=1; $i <=count($articles); $i++) {             
+        //     $sheet->setCellValue('A'.$i, $articles[$i-1]->name);            
+        //     $sheet->setCellValue('B'.$i, $articles[$i-1]->text);
+        //     $sheet->setCellValue('C'.$i, $articles[$i-1]->getAuthor()->name);
+        //     $sheet->setCellValue('D'.$i, $articles[$i-1]->created_at);
+        // }
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
     }
 
     public function edit($id)

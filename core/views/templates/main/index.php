@@ -2,7 +2,8 @@
 <hr>
 <div class="saveArticles">
     <span>Save in: </span>    
-    <a href="/pdf-articles" class="savePdf">PDF</a>
+    <a href="/pdf-articles" class="savePdf"></a>
+    <a href="/excel-articles" class="saveExcel"></a>
 </div>
 
 

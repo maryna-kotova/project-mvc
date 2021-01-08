@@ -15,16 +15,22 @@
     font-weight: 700;
     font-size: 1.3rem;
 }
-.savePdf{
+.savePdf,
+.saveExcel{
     display: block;
     width: 3rem;
     height: 4rem;
     margin: 0.5rem;
-    background-image: url(../assets/icons/pdf.png);
     background-size: 100%;
     background-repeat: no-repeat;
-    border: 1px solid red;
+    /* border: 1px solid red; */
+}
+.savePdf{
+    background-image: url(../assets/icons/pdf.png);
 } 
+.saveExcel{
+    background-image: url(../assets/icons/excel.png);
+}
 .allArticles{
     display: flex;
     flex-flow: row wrap;

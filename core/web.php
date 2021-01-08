@@ -10,5 +10,6 @@ return [
     'article/add'             => 'ArticleController@add',
     'article/add-form'        => 'ArticleController@addForm',
     'pdf-articles'            => 'ArticleController@pdf',
+    'excel-articles'          => 'ArticleController@excel',
     
 ];
