@@ -4,5 +4,5 @@
 
 
 
-
+// INSERT INTO `catigories` (`id`, `name`) VALUES (NULL, 'TV'), (NULL, 'Phone');
 
