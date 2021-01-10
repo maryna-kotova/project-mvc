@@ -48,7 +48,7 @@ abstract class Model{
         foreach($properties as $column=>$value){
             $columns[] = $column.'=:'.$column;
         }        
-        $pdo = DB::getInstance();
+        $pdo = Db::getInstance();
         $sql = 'UPDATE '.static::getTableName().' SET '.implode(', ', $columns).' WHERE id=:id';
         $pdo->query($sql, $properties, static::class);
     }
@@ -62,7 +62,7 @@ abstract class Model{
             $values[]= $value;
         }       
         $values = implode("', '", $values);
-        $pdo = DB::getInstance();
+        $pdo = Db::getInstance();
         $sql = "INSERT INTO ".static::getTableName()." (".implode(', ', $columns).") VALUES ('".$values."')";
         //echo $sql;
         $pdo->query($sql, [], static::class);
@@ -70,7 +70,7 @@ abstract class Model{
     
     public function delete()
     {
-        $pdo = DB::getInstance();
+        $pdo = Db::getInstance();
         $sql = 'DELETE FROM '.static::getTableName().' WHERE id='.$this->id;
         $pdo->query($sql, [], static::class );  
     }

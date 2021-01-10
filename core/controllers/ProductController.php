@@ -1,7 +1,7 @@
 <?php
 namespace Core\Controllers;
 
-
+use Core\Models\Category;
 use Core\Views\View;
 // use Core\Models\Article;
 
@@ -12,7 +12,7 @@ class ProductController extends Controller{
         View::render('main/import');
     }
 
-    public function uploadFile(){     
+    public static function uploadFile(){     
         $dir = 'uploads';
         $uploadFile = $_FILES['fileProd'];
         $nameUploadFile = $uploadFile['name'];
@@ -61,6 +61,17 @@ class ProductController extends Controller{
         // echo $table['name'][2]; 
         // echo '</pre>';  
         return $table;        
+    }
+    public function addProducts()
+    {
+        $category = new Category();
+        $categoryList = $category->getCategoriesFromExel();
+        foreach($categoryList as $key => $value){
+            $category->name = $value;
+            $category->name = $value;
+            $category->save();
+        }
+        $this->redirect('/');
     }
 
 }
