@@ -74,6 +74,20 @@ abstract class Model{
         $sql = 'DELETE FROM '.static::getTableName().' WHERE id='.$this->id;
         $pdo->query($sql, [], static::class );  
     }
+    
+    public static function findOneByColumn(string $columnName, $value): ?self
+    {
+        $pdo = DB::getInstance();
+        $result = $pdo->query(
+            'SELECT * FROM ' . static::getTableName() . ' WHERE ' . $columnName . ' = :value LIMIT 1;',
+            [':value' => $value],
+            static::class
+        );
+        if ($result === []) {
+            return null;
+        }
+        return $result[0];
+    }
 
     abstract protected static function getTableName();    
 }

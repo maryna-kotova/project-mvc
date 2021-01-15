@@ -13,7 +13,7 @@ categories
 	id bigint unsigned primary key
 	name varchar unique
 products
-	id bigint unsigned primary key
+	id bigint unsigned primary key 
 	name varchar
 	description text
 	price float

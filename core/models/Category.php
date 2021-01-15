@@ -9,13 +9,11 @@ class Category extends Model{
         return 'categories';
     }
 
-    public function getCategoriesFromExel(){
+    public static function getCategoriesFromExel(){
         $table = ProductController::uploadFile();
         $categories = $table['categories'];
         return $categories;
     }
-
-
 }
 
 

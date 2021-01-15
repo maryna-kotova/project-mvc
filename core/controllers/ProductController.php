@@ -2,11 +2,9 @@
 namespace Core\Controllers;
 
 use Core\Models\Category;
+use Core\Models\Product;
 use Core\Views\View;
-// use Core\Models\Article;
-
 class ProductController extends Controller{ 
-
     public function import()
     {
         View::render('main/import');
@@ -54,24 +52,68 @@ class ProductController extends Controller{
                     'sku'        =>$sku, 
                     'categories' =>$categories
                  ];
-        // $categories = array_unique($categories);         
-        // echo '<pre>';    
-        // var_dump($table);  
-        // print_r($table);   
-        // echo $table['name'][2]; 
-        // echo '</pre>';  
+ 
         return $table;        
     }
+
     public function addProducts()
     {
         $category = new Category();
         $categoryList = $category->getCategoriesFromExel();
-        foreach($categoryList as $key => $value){
-            $category->name = $value;
-            $category->name = $value;
-            $category->save();
+        $categoryFromDB = Category::findAll();        
+        $categoriesInDb = [];
+
+        foreach ($categoryFromDB as $key => $value) {
+            array_push($categoriesInDb, $value->name);
         }
-        $this->redirect('/');
+
+        $diffCategories = array_diff($categoryList, $categoriesInDb);
+
+        if ( count($diffCategories) > 0  ){
+            foreach($diffCategories as $key => $value){
+                $category->id = 'NULL';
+                $category->name = $value;
+                $category->save();
+            }
+            $this->redirect('/');
+        }
+        $products = new Product();
+       
+        $namesProducts        = $products->getNameFromExel();
+        $descriptionsProducts = $products->getDescriptionFromExel();
+        $pricesProducts       = $products->getPriceFromExel();
+        $skuProducts          = $products->getSkuFromExel();       
+
+        $productsDb = Product::findAll();
+        if( count($productsDb) > 0 ){
+           echo 'Добавьте продукты';
+            // $cat = $products->getCategory();
+
+        }else{
+  
+            for ($i=0; $i < count($namesProducts); $i++) { 
+               for ($i=0; $i < count($descriptionsProducts); $i++) { 
+                   for ($i=0; $i < count($pricesProducts) ; $i++) { 
+                       for ($i=0; $i < count($skuProducts); $i++) { 
+                            $products->id          = 'NULL';
+                            $products->name        = $namesProducts[$i];
+                            $products->description = $descriptionsProducts[$i];
+                            $products->price       = $pricesProducts[$i];
+                            $products->sku         = $skuProducts[$i];
+
+                            $products->save();
+                       }
+                   }
+               }
+            }
+            // $this->redirect('/');
+        }
+
+        // echo '<pre>';     
+        // echo print_r($cat);
+        // echo '</pre>';
+
     }
+ 
 
 }

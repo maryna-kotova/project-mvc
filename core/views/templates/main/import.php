@@ -11,4 +11,3 @@
     <input type="hidden" name="action" value="uploadFile">  
     <input type="submit" value="Add products" />
 </form>
-

@@ -13,6 +13,7 @@ return [
     'excel-articles'          => 'ArticleController@excel',
     'import'                  => 'ProductController@import',
     'import/add-products'     => 'ProductController@addProducts',
+    'products'                => 'ProductController@products',
 
     
 ];
