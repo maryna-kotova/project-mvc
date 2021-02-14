@@ -26,51 +26,38 @@ class ArticleController extends Controller{
         foreach($articles as $article){
             $html .= "<h2>{$article->name}</h2>";
             $html .= "<p>{$article->text}</p>";
-        }
-        // $mpdf = new \Mpdf\Mpdf();
-        // $mpdf->WriteHTML($html);
-        // $mpdf->Output();
-        
+        }  
 
 // -------нумерация страниц--------------
         $mpdf = new \Mpdf\Mpdf();        
         $mpdf->setFooter('Страница {PAGENO} из {nbpg}');
         $mpdf->WriteHTML($html);        
         // $mpdf->Output();
-// ---------------------
+// ------скачать файл pdf
         $mpdf->Output('articles.pdf', \Mpdf\Output\Destination::DOWNLOAD);
     }
 
     public function excel()
     {
-        header('Content-Type: application/vnd.ms-excel');
-        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // определение формата файла для скачивания xlsx
+        header('Content-Type: application/vnd.ms-excel');        
         header('Content-Disposition: attachment;filename="articles.xlsx"');
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         $articles = Article::findAll();
-        $count=1;
         
-       foreach($articles as $article){
-            $count++;
-            $autor = $article->getAuthor()->name;
-            $sheet->setCellValue('A'.$count, $article->name);            
-            $sheet->setCellValue('B'.$count, $article->text);
-            $sheet->setCellValue('C'.$count, $autor);
-            $sheet->setCellValue('D'.$count, $article->created_at);
+        //устанавливаем в необходимые ячейки данные из базы данных
+        for ($i=1; $i <= count($articles); $i++) { 
+            $sheet->setCellValue('A'.$i, $articles[$i-1]->name);
+            $sheet->setCellValue('B'.$i, $articles[$i-1]->text);
+            $sheet->setCellValue('C'.$i, $articles[$i-1]->getAuthor()->name);
+            $sheet->setCellValue('D'.$i, $articles[$i-1]->created_at);
         }
-        // $sheet->setCellValue('A1', 'Here must be my articles!');
-
-
-        // for ($i=1; $i <=count($articles); $i++) {             
-        //     $sheet->setCellValue('A'.$i, $articles[$i-1]->name);            
-        //     $sheet->setCellValue('B'.$i, $articles[$i-1]->text);
-        //     $sheet->setCellValue('C'.$i, $articles[$i-1]->getAuthor()->name);
-        //     $sheet->setCellValue('D'.$i, $articles[$i-1]->created_at);
-        // }
-
+        //записываем в файл эксель
         $writer = new Xlsx($spreadsheet);
+        // сохраняем данный файл в указанную папку
         $writer->save('php://output');
     }
 
@@ -80,9 +67,10 @@ class ArticleController extends Controller{
         if(!$article){
             throw new NotFoundExeption();
         }
-        $article->name = $_POST['name']; // $_POST[]
+        $article->name = $_POST['name']; 
         $article->text = $_POST['text'];
-        $article->user_id = $_POST['user_id'];       
+        $article->user_id = $_POST['user_id'];    
+          
         $article->save();
         $this->redirect('/');
     }
@@ -115,8 +103,7 @@ class ArticleController extends Controller{
 
     public function delete($id)
     {        
-        $article = Article::getById($id);
-        //var_dump($article);
+        $article = Article::getById($id);       
         $article->delete();
         $this->redirect('/');
     }

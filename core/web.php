@@ -12,8 +12,6 @@ return [
     'pdf-articles'            => 'ArticleController@pdf',
     'excel-articles'          => 'ArticleController@excel',
     'import'                  => 'ProductController@import',
-    'import/add-products'     => 'ProductController@addProducts',
-    'products'                => 'ProductController@products',
-
-    
+    'load'                    => 'ProductController@load',
+    'loadfile'                => 'ProductController@loadFile',   
 ];

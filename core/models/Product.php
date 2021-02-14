@@ -8,32 +8,10 @@ class Product extends Model{
         return 'products';
     }
     
-    public function getCategory()
+    public static function getCategory(string $nameCateg)
     {
-        return Category::getById($this->category_id);
+        return Category::getCategId($nameCateg);
     }
-
-    public static function getNameFromExel(){
-        $table = ProductController::uploadFile();
-        $products = $table['name'];
-        return $products;
-    }
-    public static function getDescriptionFromExel(){
-        $table = ProductController::uploadFile();
-        $products = $table['description'];
-        return $products;
-    }
-    public static function getPriceFromExel(){
-        $table = ProductController::uploadFile();
-        $products = $table['price'];
-        return $products;
-    }
-    public static function getSkuFromExel(){
-        $table = ProductController::uploadFile();
-        $products = $table['sku'];
-        return $products;
-    }
-
 }
 
 
