@@ -15,7 +15,7 @@ class ProductController extends Controller{
     public function setCountAdd()
     {
         self::$countAdd++;
-        $file = fopen('assets/txts/add.txt', 'w');
+        $file = fopen('assets/data/add.txt', 'w');
         fwrite($file, 'Добавлено товаров: ' . self::$countAdd);
         fclose($file);
     }
@@ -23,7 +23,7 @@ class ProductController extends Controller{
     public function setCountCh()
     {
         self::$countCh++;
-        $file = fopen('assets/txts/change.txt', 'w');
+        $file = fopen('assets/data/change.txt', 'w');
         fwrite($file, 'Обновлено товаров: ' . self::$countCh);
         fclose($file);
     }
@@ -35,11 +35,11 @@ class ProductController extends Controller{
 
     public function load()
     {
-        if( file_exists ('assets/txts/add.txt') ){
-            $this->unlink('assets/txts/add.txt');
+        if( file_exists ('assets/data/add.txt') ){
+            $this->unlink('assets/data/add.txt');
         }
-        if( file_exists ('assets/txts/change.txt') ){
-            $this->unlink('assets/txts/change.txt');
+        if( file_exists ('assets/data/change.txt') ){
+            $this->unlink('assets/data/change.txt');
         }
         
         $file = $_FILES['file'];  
@@ -89,21 +89,21 @@ class ProductController extends Controller{
 
     public function loadFile(){
 
-        if( !file_exists ('assets/txts/add.txt') ){
+        if( !file_exists ('assets/data/add.txt') ){
             self::$countAdd = 'Добавлено товаров: 0';
         }
         else{
-            $fAdd = fopen('assets/txts/add.txt', 'r');
-            self::$countAdd = fread($fAdd, filesize('assets/txts/add.txt'));
+            $fAdd = fopen('assets/data/add.txt', 'r');
+            self::$countAdd = fread($fAdd, filesize('assets/data/add.txt'));
             fclose($fAdd);
         }
 
-        if( !file_exists ('assets/txts/change.txt') ){
+        if( !file_exists ('assets/data/change.txt') ){
             self::$countCh = 'Обновлено товаров: 0';
         }
         else{
-            $fCh = fopen('assets/txts/change.txt', 'r');
-            self::$countCh = fread($fCh, filesize('assets/txts/change.txt'));
+            $fCh = fopen('assets/data/change.txt', 'r');
+            self::$countCh = fread($fCh, filesize('assets/data/change.txt'));
             fclose($fCh);
         }
 
