@@ -1,10 +1,13 @@
 <?php
+
 namespace Core\Controllers;
 
 use Core\Models\Category;
 use Core\Models\Product;
 use Core\Views\View;
-class ProductController extends Controller{ 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+class ProductController extends Controller{
 
     public static $countAdd = 0;
     public static $countCh = 0;
@@ -12,7 +15,7 @@ class ProductController extends Controller{
     public function setCountAdd()
     {
         self::$countAdd++;
-        $file = fopen('assets/dataProducts/add.txt', 'w');
+        $file = fopen('assets/txts/add.txt', 'w');
         fwrite($file, 'Добавлено товаров: ' . self::$countAdd);
         fclose($file);
     }
@@ -20,7 +23,7 @@ class ProductController extends Controller{
     public function setCountCh()
     {
         self::$countCh++;
-        $file = fopen('assets/dataProducts/change.txt', 'w');
+        $file = fopen('assets/txts/change.txt', 'w');
         fwrite($file, 'Обновлено товаров: ' . self::$countCh);
         fclose($file);
     }
@@ -32,11 +35,11 @@ class ProductController extends Controller{
 
     public function load()
     {
-        if( file_exists ('assets/dataProducts/add.txt') ){
-            $this->unlink('assets/dataProducts/add.txt');
+        if( file_exists ('assets/txts/add.txt') ){
+            $this->unlink('assets/txts/add.txt');
         }
-        if( file_exists ('assets/dataProducts/change.txt') ){
-            $this->unlink('assets/dataProducts/change.txt');
+        if( file_exists ('assets/txts/change.txt') ){
+            $this->unlink('assets/txts/change.txt');
         }
         
         $file = $_FILES['file'];  
@@ -86,21 +89,21 @@ class ProductController extends Controller{
 
     public function loadFile(){
 
-        if( !file_exists ('assets/dataProducts/add.txt') ){
-            self::$countAdd = 'Добавлено : 0';
+        if( !file_exists ('assets/txts/add.txt') ){
+            self::$countAdd = 'Добавлено товаров: 0';
         }
         else{
-            $fAdd = fopen('assets/dataProducts/add.txt', 'r');
-            self::$countAdd = fread($fAdd, filesize('assets/dataProducts/add.txt'));
+            $fAdd = fopen('assets/txts/add.txt', 'r');
+            self::$countAdd = fread($fAdd, filesize('assets/txts/add.txt'));
             fclose($fAdd);
         }
 
-        if( !file_exists ('assets/dataProducts/change.txt') ){
-            self::$countCh = 'Обновлено : 0';
+        if( !file_exists ('assets/txts/change.txt') ){
+            self::$countCh = 'Обновлено товаров: 0';
         }
         else{
-            $fCh = fopen('assets/dataProducts/change.txt', 'r');
-            self::$countCh = fread($fCh, filesize('assets/dataProducts/change.txt'));
+            $fCh = fopen('assets/txts/change.txt', 'r');
+            self::$countCh = fread($fCh, filesize('assets/txts/change.txt'));
             fclose($fCh);
         }
 
@@ -110,6 +113,4 @@ class ProductController extends Controller{
     public function unlink(string $path){
         unlink($path);
     }
- 
-
 }
